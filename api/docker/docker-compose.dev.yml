@@ -1,0 +1,66 @@
+version: '3.1'
+services:
+  prebuild_web:
+    image: ${DOCKER_REGISTRY_MIRROR}composer:1.8.5
+    command: install --no-interaction --ignore-platform-reqs
+    volumes:
+      - ../:/app
+      - ${HOME}/.composer/${PRODUCT_NAME}:/tmp/
+    environment:
+      http_proxy: ${http_proxy}
+      https_proxy: ${http_proxy}
+      HTTP_PROXY: ${http_proxy}
+      HTTPS_PROXY: ${http_proxy}
+      no_proxy: ${no_proxy}
+
+  web:
+    container_name: MDMTool_web
+    image: ${DOCKER_RELEASE_REPO}${PRODUCT_NAME}/web:${VERSION}
+    env_file: .env
+    build:
+      context: ../
+      dockerfile: docker/web/Dockerfile
+      args:
+        DOCKER_REPO: "${DOCKER_REPO}"
+        BUILD_VERSION: "local"
+        BUILD_INFO: "local"
+    volumes:
+      - ../:/var/www/html/
+    ports:
+      - 8008:80
+
+  mongo:
+    container_name: MDMTool_mongo
+    image: mongo:4.0-xenial
+    restart: unless-stopped
+    logging:
+      driver: syslog
+      options:
+        tag: "DOCKER:{{.Name}}"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - ../databases/mongo:/data/db
+
+  mongo-express:
+    container_name: MDMTool_mongo_express
+    image: mongo-express
+    restart: always
+    ports:
+      - 8009:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: MDMTool_mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${ME_CONFIG_MONGODB_ADMINUSERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${ME_CONFIG_MONGODB_ADMINPASSWORD}
+
+  mariadb:
+    container_name: MDMTool_mariadb
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ../../databases/mariadb:/var/lib/mysql
+    ports:
+      - 3310:3306

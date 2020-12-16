@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Use:
+# ./scripts/bash web
+# ./scripts/bash mysql
+
+docker exec -ti $@ bash

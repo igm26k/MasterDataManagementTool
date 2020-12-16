@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+echo "begin ${0}"
+
+# wait for mysql service
+while ! mysqladmin ping -h"$DB_HOST" --silent; do
+    sleep 1
+done
+
+# yii-migrate
+if [ "${DISABLE_YII_MIGRATE}" != "1" ]; then
+    echo "run yii migrations"
+    ./yii migrate/up --interactive=0
+else
+    echo "YII-MIGRATE: Disabled (\$DISABLE_YII_MIGRATE)"
+fi
+
+mkdir --mode 775 --parents /var/www/html/runtime
+chown www-data:www-data /var/www/html/runtime
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- php "$@"
+fi
+
+exec "$@"
+
+echo "end ${0}"
