@@ -19,7 +19,7 @@ class DictionaryValue extends ActiveRecord
      */
     public static function collectionName()
     {
-        return ['MDMToolMongo', 'DictionaryValue'];
+        return 'DictionaryValue';
     }
 
     /**

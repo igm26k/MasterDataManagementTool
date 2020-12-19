@@ -21,7 +21,7 @@ class Service extends ActiveRecord
      */
     public static function collectionName()
     {
-        return ['MDMToolMongo', 'Service'];
+        return 'Service';
     }
 
     /**

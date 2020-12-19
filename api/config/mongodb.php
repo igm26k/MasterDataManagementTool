@@ -1,14 +1,13 @@
 <?php
 
 use app\helpers\Env;
-use KebaCorp\VaultSecret\VaultSecret;
 
-require __DIR__ . '/../helpers/Env.php';
+require_once __DIR__ . '/../helpers/Env.php';
 
-$host = VaultSecret::getSecret('MONGO_DB_HOST', 'mongo');
-$name = VaultSecret::getSecret('MONGO_DB_NAME', 'MDMToolMongo');
-$user = VaultSecret::getSecret('MONGO_DB_USER', 'MDMToolMongo');
-$pass = VaultSecret::getSecret('MONGO_DB_PASS', 'MDMToolMongo');
+$host = Env::get('MONGO_DB_HOST', 'mongo');
+$name = Env::get('MONGO_DB_NAME', 'MDMToolMongo');
+$user = Env::get('MONGO_DB_USER', 'MDMToolMongo');
+$pass = Env::get('MONGO_DB_PASSWORD', 'MDMToolMongo');
 
 $config = [
     'class'   => '\yii\mongodb\Connection',

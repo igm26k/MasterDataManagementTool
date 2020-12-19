@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\api\controllers;
 
 use Yii;
 use yii\filters\Cors;

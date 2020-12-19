@@ -60,7 +60,7 @@ class DictionaryMeta extends ActiveRecord
      */
     public static function collectionName()
     {
-        return ['MDMToolMongo', 'DictionaryMeta'];
+        return 'DictionaryMeta';
     }
 
     /**

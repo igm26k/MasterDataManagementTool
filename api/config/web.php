@@ -68,13 +68,15 @@ $config = [
             'controllerMap' => [
                 'assignment' => [
                     'class'         => 'mdm\admin\controllers\AssignmentController',
-                    /* 'userClassName' => 'app\models\User', */
                     'idField'       => 'id',
                     'usernameField' => 'username',
                 ],
             ],
             'layout'        => 'left-menu',
             'mainLayout'    => '@app/views/layouts/main.php',
+        ],
+        'api' => [
+            'class' => 'app\modules\api\Module',
         ],
     ],
     'as access'  => [

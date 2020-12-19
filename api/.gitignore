@@ -13,7 +13,7 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-/application/vendor
+vendor
 
 # composer itself is not needed
 composer.phar
@@ -22,12 +22,12 @@ composer.phar
 .DS_Store
 
 # phpunit itself is not needed
-/application/phpunit.phar
+phpunit.phar
 # local phpunit config
-/application/phpunit.xml
+phpunit.xml
 
-/application/tests/_output/*
-/application/tests/_support/_generated
+tests/_output/*
+tests/_support/_generated
 
-/docker/.env
-/secrets.json
+.env
+secrets.json

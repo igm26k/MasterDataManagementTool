@@ -44,7 +44,7 @@ class Menu extends ActiveRecord
      */
     public static function collectionName()
     {
-        return ['MDMToolMongo', 'Menu'];
+        return 'Menu';
     }
 
     /**

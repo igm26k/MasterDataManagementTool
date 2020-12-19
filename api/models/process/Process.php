@@ -22,7 +22,7 @@ class Process extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return ['MDMToolMongo', 'Process'];
+        return 'Process';
     }
 
     /**

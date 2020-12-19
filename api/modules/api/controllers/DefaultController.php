@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\api\controllers;
 
 use app\api\exceptions\ApiErrorException;
 use app\models\dictionary\DictionaryMeta;
@@ -9,15 +9,12 @@ use app\models\menu\Menu;
 use Yii;
 
 /**
- * Class ApiController
- *
- * @package app\controllers
+ * Default controller for the `api` module
  */
-class ApiController extends BaseController
+class DefaultController extends BaseController
 {
     public function actionIndex()
     {
-
     }
 
     /**

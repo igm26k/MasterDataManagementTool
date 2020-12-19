@@ -20,7 +20,7 @@ class DictionaryCategory extends ActiveRecord
      */
     public static function collectionName()
     {
-        return ['MDMToolMongo', 'DictionaryCategory'];
+        return 'DictionaryCategory';
     }
 
     /**

@@ -1,0 +1,57 @@
+version: '3.1'
+services:
+#  prebuild_api:
+#    container_name: mdmt_prebuild_api
+#    image: composer
+#    command: install --no-interaction --ignore-platform-reqs
+#    volumes:
+#      - ./:/app
+#      - ${HOME}/.composer/${PRODUCT_NAME}:/tmp/
+
+  api:
+    container_name: mdmt_api
+    restart: unless-stopped
+    env_file: .env
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    volumes:
+      - ./:/var/www/html/
+    ports:
+      - 880:80
+
+  mongo:
+    container_name: mdmt_mongo
+    restart: unless-stopped
+    env_file: .env
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - ../databases/mongo:/data/db
+
+  mongo-express:
+    container_name: mdmt_mongo_express
+    restart: unless-stopped
+    env_file: .env
+    image: mongo-express
+    ports:
+      - 881:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mdmt_mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+
+  mariadb:
+    container_name: mdmt_mariadb
+    restart: unless-stopped
+    env_file: .env
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    volumes:
+      - ../databases/mariadb:/var/lib/mysql
+    ports:
+      - 882:3306
